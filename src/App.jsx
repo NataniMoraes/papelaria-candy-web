@@ -1,48 +1,52 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
+import { Link, Outlet } from 'react-router-dom' 
 
 function App() {
   return (
-    <Flex w='100%'> {/* Container principal em Flexbox */}
+    <Flex w='100%'>
       
       {/* 1. SIDEBAR (Navegação) */}
       <Box 
-        w='300px' // Largura fixa da sidebar
-        h='100vh' // Altura total da tela
-        bg='gray.100' // Cor de fundo pastel
-        p={6} // Padding (espaçamento interno)
+        w='300px'
+        h='100vh'
+        bg='gray.100'
+        p={6}
       >
-        <Heading as='h1' size='lg' color='purple.700' mb={8}> {/* Título */}
+        <Heading as='h1' size='lg' color='purple.700' mb={8}>
           Papelaria Candy 🍬
         </Heading>
 
-        {/* Links de Navegação (futuros) */}
+        {/* Links */}
         <Box mb={4}>
-          <Text fontSize='xl' fontWeight='bold' color='gray.600'>Home</Text>
+          <Link to="/">
+            <Text fontSize='xl' fontWeight='bold' color='gray.600'>Home</Text>
+          </Link>
         </Box>
         <Box mb={4}>
-          <Text fontSize='xl' fontWeight='bold' color='gray.600'>Produtos</Text>
+          <Link to="/produtos">
+            <Text fontSize='xl' fontWeight='bold' color='gray.600'>Listar Produtos</Text>
+          </Link>
         </Box>
+        
+        {/* --- NOVO LINK AQUI --- */}
         <Box mb={4}>
-          <Text fontSize='xl' fontWeight='bold' color='gray.600'>Categorias</Text>
+          <Link to="/produtos/novo">
+            <Text fontSize='xl' fontWeight='bold' color='gray.600'>Cadastrar Produto</Text>
+          </Link>
         </Box>
-        <Box mb={4}>
-          <Text fontSize='xl' fontWeight='bold' color='gray.600'>Vendas</Text>
-        </Box>
+        {/* --------------------- */}
+
       </Box>
 
-      {/* 2. ÁREA DE CONTEÚDO PRINCIPAL */}
-      <Box 
-        flex='1' // Faz esta Box ocupar todo o espaço restante
-        h='100vh'
-        p={10} // Padding maior para o conteúdo
-        bg='pink.50' // Fundo rosa bem clarinho
-      >
-        <Heading>Página Atual</Heading>
-        <Text>O conteúdo da página será carregado aqui.</Text>
+      {/* 2. ÁREA DE CONTEÚDO */}
+      <Box flex='1' h='100vh' p={10} bg='pink.50'>
+        <Outlet /> 
       </Box>
 
     </Flex>
   )
 }
 
+// --- A LINHA QUE FALTAVA ---
 export default App
+// -----------------------------
