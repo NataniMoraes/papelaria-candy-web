@@ -24,6 +24,11 @@ function ListaProdutosPage() {
   return (
     <Box>
       <Heading mb={6}>Lista de Produtos</Heading>
+      <Text>Clique em um produto para editar ou excluir.
+        
+      </Text>
+
+
       
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
         

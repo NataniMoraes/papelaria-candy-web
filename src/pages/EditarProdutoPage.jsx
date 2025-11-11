@@ -8,18 +8,18 @@ import {
   Select,
   Button,
   useToast,
-  Spinner // Para mostrar um indicador de "carregando"
+  Spinner,
+  Flex
 } from '@chakra-ui/react'
 import axios from 'axios'
-import { useNavigate, useParams } from 'react-router-dom' // Importa o useParams
+import { useNavigate, useParams } from 'react-router-dom'
 
 function EditarProdutoPage() {
-  // O useParams nos dá acesso aos parâmetros da URL (ex: o ":id")
   const { id } = useParams()
   const navigate = useNavigate()
   const toast = useToast()
 
-  // Estado para os dados do formulário
+  // --- Estado para os dados do formulário ---
   const [formData, setFormData] = useState({
     nome: '',
     descricao: '',
@@ -29,23 +29,23 @@ function EditarProdutoPage() {
     categoriaId: ''
   })
   const [categorias, setCategorias] = useState([])
-  const [isLoading, setIsLoading] = useState(true) // Estado de carregamento
+  const [isLoading, setIsLoading] = useState(true)
 
-  // 1. Busca os dados do PRODUTO e as CATEGORIAS quando a página carrega
+  // --- useEffect CORRIGIDO (para buscar os dados) ---
   useEffect(() => {
     // Função para buscar o produto específico
     const fetchProduto = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/produtos/${id}`)
-        // Preenche o formulário com os dados do produto
         const produto = response.data
+        // Preenche o formulário com os dados do produto
         setFormData({
           nome: produto.nome,
           descricao: produto.descricao,
           preco: produto.preco,
           quantidadeEstoque: produto.quantidadeEstoque,
           codigoBarras: produto.codigoBarras,
-          categoriaId: produto.categoria.id // Pega o ID da categoria do produto
+          categoriaId: produto.categoria.id // Pega o ID da categoria
         })
       } catch (error) {
         console.error("Erro ao buscar produto:", error)
@@ -74,7 +74,7 @@ function EditarProdutoPage() {
     })
   }, [id, toast]) // Depende do 'id' da URL
 
-  // 2. Função para atualizar o estado quando o usuário digita
+  // --- handleChange CORRIGIDO (para atualizar o formulário) ---
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData({
@@ -83,7 +83,7 @@ function EditarProdutoPage() {
     })
   }
 
-  // 3. Função para ENVIAR A ATUALIZAÇÃO (PUT)
+  // --- handleSubmit CORRIGIDO (para salvar as alterações) ---
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -109,12 +109,38 @@ function EditarProdutoPage() {
       })
   }
 
-  // Se estiver carregando (buscando dados), mostra um Spinner
+  // --- Função para DELETAR (já estava correta) ---
+  const handleDelete = () => {
+    if (window.confirm("Tem certeza que deseja excluir este produto? Esta ação não pode ser desfeita.")) {
+      
+      axios.delete(`http://localhost:8080/produtos/${id}`)
+        .then(response => {
+          toast({
+            title: "Produto Excluído!",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+          })
+          navigate('/produtos') // Volta para a lista
+        })
+        .catch(error => {
+          console.error("Erro ao excluir produto:", error)
+          toast({
+            title: "Erro ao excluir",
+            description: "Houve um problema ao excluir o produto.",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+          })
+        })
+    }
+  }
+
   if (isLoading) {
     return <Spinner size="xl" />
   }
 
-  // 4. O formulário em si (igual ao de cadastro)
+  // --- O formulário (já estava correto) ---
   return (
     <Box as="form" onSubmit={handleSubmit}>
       <Heading mb={6}>Editar Produto: {formData.nome}</Heading>
@@ -148,7 +174,7 @@ function EditarProdutoPage() {
         <FormLabel>Categoria</FormLabel>
         <Select
           name="categoriaId"
-          value={formData.categoriaId} // Define o valor selecionado
+          value={formData.categoriaId}
           onChange={handleChange}
         >
           <option value="">Selecione uma categoria</option>
@@ -160,9 +186,20 @@ function EditarProdutoPage() {
         </Select>
       </FormControl>
 
-      <Button type="submit" colorScheme="purple" size="lg" mt={4}>
-        Salvar Alterações
-      </Button>
+      <Flex mt={4} justify="space-between">
+        <Button type="submit" colorScheme="purple" size="lg">
+          Salvar Alterações
+        </Button>
+        
+        <Button
+          type="button"
+          colorScheme="red"
+          size="lg"
+          onClick={handleDelete}
+        >
+          Excluir Produto
+        </Button>
+      </Flex>
     </Box>
   )
 }
