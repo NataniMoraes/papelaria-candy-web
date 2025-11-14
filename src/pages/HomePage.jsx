@@ -39,9 +39,10 @@ function HomePage() {
   // 2. Renderizar os Stat Cards
   return (
     <Box>
-      <Heading mb={2}>Dashboard</Heading>
-      <Text fontSize="lg" color="gray.600" mb={8}>
-        Bem-vindo(a) ao painel de controle da Papelaria Candy! 🍬
+      <Heading mb={5
+      }>Dashboard</Heading>
+      <Text fontSize="lg" color="gray.600" mb={9}>
+        Painel de controle da Papelaria Candy!
       </Text>
 
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>

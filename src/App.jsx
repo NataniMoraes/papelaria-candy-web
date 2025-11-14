@@ -13,7 +13,7 @@ function App() {
         p={6}
       >
         <Heading as='h1' size='lg' color='purple.700' mb={8}>
-          Papelaria Candy
+         🍭Papelaria Candy 🍭
         </Heading>
 
         {/* Links */}
