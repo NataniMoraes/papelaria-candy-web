@@ -13,7 +13,7 @@ import {
   Icon
 } from '@chakra-ui/react'
 import axios from 'axios'
-import { FaBoxOpen, FaTags } from 'react-icons/fa' // Importando ícones
+import { FaBoxOpen, FaTags } from 'react-icons/fa' 
 
 function HomePage() {
   const [stats, setStats] = useState(null)
