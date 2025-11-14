@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { ChakraProvider } from '@chakra-ui/react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import theme from './theme'
 
-// Importar nossas páginas
+// Importar páginas
 import HomePage from './pages/HomePage.jsx'
 import ListaProdutosPage from './pages/ListaProdutosPage.jsx'
 import CadastroProdutoPage from './pages/CadastroProdutoPage.jsx'
-import EditarProdutoPage from './pages/EditarProdutoPage.jsx' // <-- 1. Importar a nova página
+import EditarProdutoPage from './pages/EditarProdutoPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -27,18 +28,19 @@ const router = createBrowserRouter([
         path: "/produtos/novo", 
         element: <CadastroProdutoPage />,
       },
-      { // <-- 2. Adicionar a nova rota de edição
-        path: "/produtos/editar/:id", // O :id é o parâmetro dinâmico
+      {
+        path: "/produtos/editar/:id",
         element: <EditarProdutoPage />,
       },
     ]
   },
 ]);
 
-// Renderizar o aplicativo
+// 3. Renderizar o aplicativo
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ChakraProvider>
+    {/* 4. Aplicar seu 'theme' aqui */}
+    <ChakraProvider theme={theme}> 
       <RouterProvider router={router} />
     </ChakraProvider>
   </React.StrictMode>,
