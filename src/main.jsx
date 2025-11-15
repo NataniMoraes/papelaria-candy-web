@@ -10,6 +10,8 @@ import HomePage from './pages/HomePage.jsx'
 import ListaProdutosPage from './pages/ListaProdutosPage.jsx'
 import CadastroProdutoPage from './pages/CadastroProdutoPage.jsx'
 import EditarProdutoPage from './pages/EditarProdutoPage.jsx'
+import ListaCategoriasPage from './pages/ListaCategoriasPage.jsx'
+import PontoDeVendaPage from './pages/PontoDeVendaPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,8 @@ const router = createBrowserRouter([
         path: "/", 
         element: <HomePage />,
       },
+
+      
       {
         path: "/produtos", 
         element: <ListaProdutosPage />,
@@ -32,6 +36,12 @@ const router = createBrowserRouter([
         path: "/produtos/editar/:id",
         element: <EditarProdutoPage />,
       },
+      { 
+        path: "/categorias", 
+        element: <ListaCategoriasPage />,
+      },
+
+
     ]
   },
 ]);

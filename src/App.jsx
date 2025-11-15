@@ -1,52 +1,74 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react'
-import { Link, Outlet } from 'react-router-dom' 
+import { Box, Flex, Heading, Text, HStack } from '@chakra-ui/react'
+import { NavLink, Outlet } from 'react-router-dom'
+import { FaHome, FaBox, FaPlusCircle, FaTags, FaShoppingCart} from 'react-icons/fa' 
+
+const NavItem = ({ to, icon, children, end }) => { 
+  const activeStyle = {
+    background: 'white',
+    color: '#be185d', 
+    borderRadius: '8px',
+  }
+
+  return (
+    <NavLink 
+      to={to} 
+      style={({ isActive }) => (isActive ? activeStyle : undefined)} 
+      end={end}
+    >
+      <HStack p={3} spacing={4} _hover={{ bg: 'gray.200', borderRadius: '8px' }}>
+        <Box as={icon} size="20px" color="candy.700" />
+        <Text fontSize='lg' fontWeight='bold'>{children}</Text>
+      </HStack>
+    </NavLink>
+  )
+}
 
 function App() {
   return (
     <Flex w='100%'>
-      
       {/* 1. SIDEBAR (Navegação) */}
-      <Box 
+      <Box
         w='300px'
         h='100vh'
         bg='gray.100'
-        p={6}
+        p={4}
       >
-        <Heading as='h1' size='lg' color='purple.700' mb={8}>
-         🍭Papelaria Candy 🍭
+        <Heading as='h1' size='lg' color='candy.700' mb={8} textAlign="center" p={2}>
+          Papelaria 🍭Candy
         </Heading>
 
-        {/* Links */}
-        <Box mb={4}>
-          <Link to="/">
-            <Text fontSize='xl' fontWeight='bold' color='gray.600'>Home</Text>
-          </Link>
-        </Box>
-        <Box mb={4}>
-          <Link to="/produtos">
-            <Text fontSize='xl' fontWeight='bold' color='gray.600'>Listar Produtos</Text>
-          </Link>
-        </Box>
+        {/* Links de Navegação */}
+        <NavItem to="/" icon={FaHome} end> {/* Adicione 'end' ao Home também */}
+          Home
+        </NavItem>
+        <NavItem to="/vendas/novo" icon={FaShoppingCart}>
+          Ponto de Venda
+        </NavItem>
+        <NavItem to="/produtos" end icon={FaBox}>
+          Listar Produtos
+        </NavItem>
+        <NavItem to="/produtos/novo" icon={FaPlusCircle}>
+          Cadastrar Produto
+        </NavItem>
+        <NavItem to="/categorias" icon={FaTags} end>
+          Gerenciar Categorias
+        </NavItem>
+        {/* ---------------------------------- */}
         
-        {/* --- NOVO LINK AQUI --- */}
-        <Box mb={4}>
-          <Link to="/produtos/novo">
-            <Text fontSize='xl' fontWeight='bold' color='gray.600'>Cadastrar Produto</Text>
-          </Link>
-        </Box>
-        {/* --------------------- */}
-
       </Box>
 
       {/* 2. ÁREA DE CONTEÚDO */}
-      <Box flex='1' h='100vh' p={10} bg='pink.50'>
-        <Outlet /> 
+      <Box
+        flex='1'
+        h='100vh'
+        p={10}
+        bg='candy.50'
+        overflowY="auto"
+      >
+        <Outlet />
       </Box>
-
     </Flex>
   )
 }
 
-// --- A LINHA QUE FALTAVA ---
 export default App
-// -----------------------------
