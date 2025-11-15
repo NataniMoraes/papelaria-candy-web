@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom'
 function PontoDeVendaPage() {
   const [produtos, setProdutos] = useState([])
   const [busca, setBusca] = useState('')
-  const [carrinho, setCarrinho] = useState([]) // Nosso carrinho de compras!
+  const [carrinho, setCarrinho] = useState([]) // Carrinho de compras
   const [total, setTotal] = useState(0)
 
   const toast = useToast()
